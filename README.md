@@ -1,17 +1,31 @@
+Prerequisites:
+Node and NPM installed
 
-```npx playwright test```  Runs the end-to-end tests.
+Step 1: Clone repo local
+```git clone https://github.com/tjl352/SDET.git```
 
-  ```npx playwright test --ui```
-    Starts the interactive UI mode.
+Step 2: Install dependencies
+```npm install``` 
 
-  ```npx playwright test --project=chromium```
-    Runs the tests only on Desktop Chrome.
+Step 3: Run tests
+```npx playwright test```
 
-  ```npx playwright test example```
-    Runs the tests in a specific file.
+Optional:
 
-  ```npx playwright test --debug```
-    Runs the tests in debug mode.
+```npx playwright test``` 
+Runs the end-to-end tests.
 
-  ```npx playwright codegen```
-    Auto generate tests with Codegen.
+```npx playwright test --ui```
+Starts the interactive UI mode.
+
+```npx playwright test --project=chromium```
+Runs the tests only on Desktop Chrome.
+
+```npx playwright test example```
+Runs the tests in a specific file.
+
+```npx playwright test --debug```
+Runs the tests in debug mode.
+
+```npx playwright codegen```
+Auto generate tests with Codegen.
