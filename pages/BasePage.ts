@@ -13,7 +13,7 @@ export class BasePage {
 
   // Global element example (optional)
   getCartLink(): Locator {
-    return this.page.getByTestId('shopping-cart-link');
+    return this.page.locator('a.shopping_cart_link');
   }
 
   async openCart() {

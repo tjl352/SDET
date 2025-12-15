@@ -1,31 +1,127 @@
-Prerequisites:
-Node and NPM installed
 
-Step 1: Clone repo local
-```git clone https://github.com/tjl352/SDET.git```
+# 🧪 Playwright Test Automation Project
 
-Step 2: Install dependencies
-```npm install``` 
+This repository contains Playwright end-to-end tests built with the Page Object Model (POM) pattern to ensure maintainability, scalability, and clean test structure.
 
-Step 3: Run tests
-```npx playwright test```
+---
 
-Optional:
+## 🚀 **Prerequisites**
 
-```npx playwright test``` 
-Runs the end-to-end tests.
+Before you begin, ensure you have:
 
-```npx playwright test --ui```
-Starts the interactive UI mode.
+* **Node.js** (LTS recommended)
+* **npm** (comes with Node)
 
-```npx playwright test --project=chromium```
-Runs the tests only on Desktop Chrome.
+Check versions:
 
-```npx playwright test example```
-Runs the tests in a specific file.
+```bash
+node -v
+npm -v
+```
 
-```npx playwright test --debug```
-Runs the tests in debug mode.
+---
 
-```npx playwright codegen```
-Auto generate tests with Codegen.
+## 📥 **1. Clone the Repository**
+
+```bash
+git clone https://github.com/tjl352/SDET.git
+cd SDET
+```
+
+---
+
+## 📦 **2. Install Dependencies**
+
+```bash
+npm install
+```
+
+---
+
+## ▶️ **3. Run Tests**
+
+```bash
+npx playwright test
+```
+
+---
+
+# 🔧 Optional Commands
+
+### **Run all tests**
+
+```bash
+npx playwright test
+```
+
+### **UI Mode (visual test runner)**
+
+```bash
+npx playwright test --ui
+```
+
+### **Run tests on a specific browser (Chromium example)**
+
+```bash
+npx playwright test --project=chromium
+```
+
+### **Run a specific test file**
+
+```bash
+npx playwright test example
+```
+
+### **Debug mode**
+
+```bash
+npx playwright test --debug
+```
+
+### **Launch Codegen (auto-generate tests)**
+
+```bash
+npx playwright codegen
+```
+
+---
+
+## 📂 **Project Structure (Recommended)**
+
+If you want this section included, here’s a standard layout:
+
+```
+├── tests/
+│   ├── login.spec.ts
+│   ├── example.spec.ts
+│
+├── pages/
+│   ├── BasePage.ts
+│   ├── LoginPage.ts
+│
+├── playwright.config.ts
+├── package.json
+└── README.md
+```
+
+---
+
+## ✨ **Features**
+
+* Page Object Model (POM)
+* TypeScript for type-safety and scalability
+* Playwright test runner
+* Easy to extend and maintain
+
+---
+
+## 🤝 Contributing
+
+PRs are welcome.
+Open an issue if you'd like to request a feature or report a bug.
+
+---
+
+## 📄 License
+
+MIT 

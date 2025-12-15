@@ -28,4 +28,8 @@ export class LoginPage extends BasePage {
   inventoryList(): Locator {
     return this.page.locator('.inventory_list');
   }
+
+  error(): Locator {
+    return this.errorMsg;
+  }
 }
