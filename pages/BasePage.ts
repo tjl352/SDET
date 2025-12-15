@@ -11,7 +11,6 @@ export class BasePage {
     await this.page.goto(url);
   }
 
-  // Global element example (optional)
   getCartLink(): Locator {
     return this.page.locator('a.shopping_cart_link');
   }

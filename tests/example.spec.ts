@@ -18,6 +18,22 @@ test('fails login with wrong password', async ({ page }) => {
   );
 });
 
+
+test('inventory filters by name Z to A', async ({ page }) => {
+  const login = new LoginPage(page);
+  const inventory = new InventoryPage(page);
+
+  await login.open();
+  await login.loginAs('standard_user', 'secret_sauce');
+  await inventory.sortBy('za'); // SauceDemo's sort value for Z → A
+
+  const namesAfterSort = await inventory.productNames();
+
+  // Validates that sorting by "Name (Z to A)" reorders products accordingly.
+  const expected = [...namesAfterSort].sort().reverse(); // sorted Z → A
+  await expect(namesAfterSort).toEqual(expected);
+});
+
 test('add a product to cart and verify in cart', async ({ page }) => {
   const login = new LoginPage(page);
   const inventory = new InventoryPage(page);
