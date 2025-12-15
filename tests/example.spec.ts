@@ -49,15 +49,11 @@ test('checkout information submits and proceeds to overview', async ({ page }) =
   await login.loginAsStandardUser();
   await inventory.addProductToCartAndOpenCart(product);
   const info = await new CartPage(page).proceedToCheckout();
-  await info.fillAndContinue('Jane', 'Doe', '12345');
-
-  // On the overview step, the item should be present and the Finish button should be visible
-  const overviewItem = page.locator('.cart_item').filter({ hasText: product });
-  const finishBtn = page.locator('[data-test="finish"]');
+  const overview = await info.fillAndContinue('Jane', 'Doe', '12345');
 
   await expect(page).toHaveURL(/checkout-step-two\.html$/);
-  await expect(overviewItem).toBeVisible();
-  await expect(finishBtn).toBeVisible();
+  await expect(overview.itemByName(product)).toBeVisible();
+  await expect(overview.finishBtn()).toBeVisible();
 });
 
 test('checkout overview and complete', async ({ page }) => {
