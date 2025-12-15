@@ -32,4 +32,10 @@ export class LoginPage extends BasePage {
   error(): Locator {
     return this.errorMsg;
   }
+
+  // Helper: common login flow
+  async loginAsStandardUser() {
+    await this.open();
+    await this.loginAs('standard_user', 'secret_sauce');
+  }
 }

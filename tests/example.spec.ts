@@ -2,8 +2,6 @@ import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/LoginPage';
 import { InventoryPage } from '../pages/InventoryPage';
 import { CartPage } from '../pages/CartPage';
-import { CheckoutInformationPage } from '../pages/CheckoutInformationPage';
-import { CheckoutOverviewPage } from '../pages/CheckoutOverviewPage';
 import { CheckoutCompletePage } from '../pages/CheckoutCompletePage';
 
 test('fails login with wrong password', async ({ page }) => {
@@ -18,33 +16,26 @@ test('fails login with wrong password', async ({ page }) => {
   );
 });
 
-
 test('inventory filters by name Z to A', async ({ page }) => {
   const login = new LoginPage(page);
   const inventory = new InventoryPage(page);
 
-  await login.open();
-  await login.loginAs('standard_user', 'secret_sauce');
-  await inventory.sortBy('za'); // SauceDemo's sort value for Z → A
-
-  const namesAfterSort = await inventory.productNames();
-
-  // Validates that sorting by "Name (Z to A)" reorders products accordingly.
-  const expected = [...namesAfterSort].sort().reverse(); // sorted Z → A
-  await expect(namesAfterSort).toEqual(expected);
+  await login.loginAsStandardUser();
+  const originalNames = await inventory.productNames();
+  await inventory.sortBy('za');
+  const sortedNames = await inventory.productNames();
+  const expectedNames = [...originalNames].sort().reverse();
+  
+  await expect(sortedNames).toEqual(expectedNames);
 });
 
 test('add a product to cart and verify in cart', async ({ page }) => {
   const login = new LoginPage(page);
   const inventory = new InventoryPage(page);
-  const cart = new CartPage(page);
-
   const product = 'Sauce Labs Backpack';
 
-  await login.open();
-  await login.loginAs('standard_user', 'secret_sauce');
-  await inventory.addToCart(product);
-  await inventory.openCart();
+  await login.loginAsStandardUser();
+  const cart = await inventory.addProductToCartAndOpenCart(product);
 
   await expect(inventory.cartBadge()).toHaveText('1');
   await expect(cart.itemByName(product)).toBeVisible();
@@ -53,19 +44,12 @@ test('add a product to cart and verify in cart', async ({ page }) => {
 test('checkout information submits and proceeds to overview', async ({ page }) => {
   const login = new LoginPage(page);
   const inventory = new InventoryPage(page);
-  const cart = new CartPage(page);
-  const info = new CheckoutInformationPage(page);
-
   const product = 'Sauce Labs Backpack';
 
-  await login.open();
-  await login.loginAs('standard_user', 'secret_sauce');
-  await inventory.addToCart(product);
-  await inventory.openCart();
-  await cart.checkoutButton().click();
-
-  await info.fill('Jane', 'Doe', '12345');
-  await info.continue();
+  await login.loginAsStandardUser();
+  await inventory.addProductToCartAndOpenCart(product);
+  const info = await new CartPage(page).proceedToCheckout();
+  await info.fillAndContinue('Jane', 'Doe', '12345');
 
   // On the overview step, the item should be present and the Finish button should be visible
   const overviewItem = page.locator('.cart_item').filter({ hasText: product });
@@ -76,26 +60,19 @@ test('checkout information submits and proceeds to overview', async ({ page }) =
   await expect(finishBtn).toBeVisible();
 });
 
-// Validates the end of the checkout flow: overview shows the item, finish completes the order.
 test('checkout overview and complete', async ({ page }) => {
   const login = new LoginPage(page);
   const inventory = new InventoryPage(page);
-  const cart = new CartPage(page);
-  const info = new CheckoutInformationPage(page);
-  const overview = new CheckoutOverviewPage(page);
-  const complete = new CheckoutCompletePage(page);
-
   const product = 'Sauce Labs Backpack';
 
-  await login.open();
-  await login.loginAs('standard_user', 'secret_sauce');
-  await inventory.addToCart(product);
-  await inventory.openCart();
-  await cart.checkoutButton().click();
-  await info.fill('Jane', 'Doe', '12345');
-  await info.continue();
+  await login.loginAsStandardUser();
+  await inventory.addProductToCartAndOpenCart(product);
+  const info = await new CartPage(page).proceedToCheckout();
+  const overview = await info.fillAndContinue('Jane', 'Doe', '12345');
   await overview.finish();
 
+  // Validates the end of the checkout flow: overview shows the item, finish completes the order.
+  const complete = new CheckoutCompletePage(page);
   await expect(page).toHaveURL(/checkout-complete\.html$/);
   await expect(complete.completeHeader()).toHaveText('Thank you for your order!');
   await expect(complete.completeText()).toBeVisible(); // confirmation body text

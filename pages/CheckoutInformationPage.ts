@@ -1,5 +1,6 @@
 import { Page, Locator } from '@playwright/test';
 import { BasePage } from './BasePage';
+import { CheckoutOverviewPage } from './CheckoutOverviewPage';
 
 export class CheckoutInformationPage extends BasePage {
   readonly firstName: Locator;
@@ -25,5 +26,12 @@ export class CheckoutInformationPage extends BasePage {
 
   async continue() {
     await this.continueBtn.click();
+  }
+
+  // Helper: fill form and proceed to overview
+  async fillAndContinue(first: string, last: string, zip: string) {
+    await this.fill(first, last, zip);
+    await this.continue();
+    return new CheckoutOverviewPage(this.page);
   }
 }

@@ -1,5 +1,6 @@
 import { Page, Locator } from '@playwright/test';
 import { BasePage } from './BasePage';
+import { CartPage } from './CartPage';
 
 export class InventoryPage extends BasePage {
   cartBadge(): Locator {
@@ -32,5 +33,12 @@ export class InventoryPage extends BasePage {
   
   productNames(): Promise<string[]> {
     return this.page.locator('.inventory_item_name').allInnerTexts();
+  }
+
+  // Helper: add product and navigate to cart
+  async addProductToCartAndOpenCart(productName: string) {
+    await this.addToCart(productName);
+    await this.openCart();
+    return new CartPage(this.page);
   }
 }

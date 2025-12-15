@@ -1,4 +1,3 @@
-
 # 🧪 Playwright Test Automation Project
 
 This repository contains Playwright end-to-end tests built with the Page Object Model (POM) pattern to ensure maintainability, scalability, and clean test structure.
@@ -9,8 +8,8 @@ This repository contains Playwright end-to-end tests built with the Page Object 
 
 Before you begin, ensure you have:
 
-* **Node.js** (LTS recommended)
-* **npm** (comes with Node)
+- **Node.js** (LTS recommended)
+- **npm** (comes with Node)
 
 Check versions:
 
@@ -86,32 +85,35 @@ npx playwright codegen
 
 ---
 
-## 📂 **Project Structure (Recommended)**
+## 📂 **Project Structure**
 
-If you want this section included, here’s a standard layout:
 
 ```
 ├── tests/
-│   ├── login.spec.ts
-│   ├── example.spec.ts
+│   └── example.spec.ts          # Test specifications
 │
 ├── pages/
-│   ├── BasePage.ts
-│   ├── LoginPage.ts
+│   ├── BasePage.ts              # Base page class with shared functionality
+│   ├── LoginPage.ts             # Login page object
+│   ├── InventoryPage.ts        # Product inventory page object
+│   ├── CartPage.ts             # Shopping cart page object
+│   ├── CheckoutInformationPage.ts  # Checkout information form page
+│   ├── CheckoutOverviewPage.ts     # Checkout overview page
+│   └── CheckoutCompletePage.ts     # Order completion page
 │
-├── playwright.config.ts
-├── package.json
-└── README.md
+├── playwright.config.ts         # Playwright configuration
+├── package.json                 # Project dependencies
+└── README.md                    # This file
 ```
 
 ---
 
 ## ✨ **Features**
 
-* Page Object Model (POM)
-* TypeScript for type-safety and scalability
-* Playwright test runner
-* Easy to extend and maintain
+- Page Object Model (POM)
+- TypeScript for type-safety and scalability
+- Playwright test runner
+- Easy to extend and maintain
 
 ---
 
@@ -124,4 +126,4 @@ Open an issue if you'd like to request a feature or report a bug.
 
 ## 📄 License
 
-MIT 
+MIT
