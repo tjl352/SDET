@@ -90,7 +90,8 @@ npx playwright codegen
 
 ```
 ├── tests/
-│   └── example.spec.ts          # Test specifications
+│   └── login.spec.ts          # Login Test specifications
+│   └── store.spec.ts          # Store Test specifications
 │
 ├── pages/
 │   ├── BasePage.ts              # Base page class with shared functionality
